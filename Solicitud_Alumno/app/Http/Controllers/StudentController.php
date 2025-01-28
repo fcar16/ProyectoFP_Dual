@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreStudentRequest;
 use App\Models\Student;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Storage;
 
 class StudentController extends Controller
 {
@@ -25,15 +27,31 @@ class StudentController extends Controller
     {
         return view('student.create');
     }
-    
+
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request) :RedirectResponse
+    public function store(StoreStudentRequest $request)
     {
-        $student = Student::create($request->all());
-        return redirect()->route('student.index');
+
+
+
+        $student = new Student();
+        $student->dni = $request->dni;
+        $student->name = $request->name;
+        $student->email = $request->email;
+        $student->group = $request->group;
+        $student->course = $request->course;
+
+        if ($request->hasFile('CV')) {
+            $path = $request->file('CV')->store('cvs', 'public');
+            $student->CV = $path;
+        }
+
+        $student->save();
+
+        return redirect()->route('student.index')->with('success', 'Estudiante creado exitosamente.');
     }
 
     /**
@@ -41,7 +59,7 @@ class StudentController extends Controller
      */
     public function show(Student $student)
     {
-        //
+        return view('student.show', compact('student'));
     }
 
     /**
@@ -49,26 +67,45 @@ class StudentController extends Controller
      */
     public function edit(Student $student): View
     {
+
         return view('student.edit', compact('student'));
     }
-    
-        
-    
+
+
+
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Student $student) :RedirectResponse
+    public function update(StoreStudentRequest $request, $id)
     {
-        $student->update($request->all());
-        return redirect()->route('student.index');
+
+        $student = Student::findOrFail($id);
+        $student->dni = $request->dni;
+        $student->name = $request->name;
+        $student->email = $request->email;
+        $student->group = $request->group;
+        $student->course = $request->course;
+
+        if ($request->hasFile('CV')) {
+            // Elimina el CV anterior si existe
+            if ($student->CV) {
+                Storage::disk('public')->delete($student->CV);
+            }
+            $path = $request->file('CV')->store('cvs', 'public');
+            $student->CV = $path;
+        }
+
+        $student->save();
+
+        return redirect()->route('student.index')->with('success', 'Estudiante actualizado exitosamente.');
     }
- 
+
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Student $student) : RedirectResponse
+    public function destroy(Student $student): RedirectResponse
     {
         $student->delete();
         return redirect()->route('student.index');
