@@ -19,16 +19,15 @@ class StoreStudentRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
+    public function rules()
     {
         return [
+            'dni' => 'required|string|min:9',
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:students,email',
-            'age' => 'required|integer|min:1',
-            'dni' => 'required|string|max:9|unique:students,dni',
-            'CV' => 'required|string',
-            'group' => 'required|in:1-ASIR,2-ASIR,1-DAW,2-DAW,1-DAM,2-DAM',
-            'course' => 'required|in:24/25,25/26,26/27',
+            'email' => 'required|email|max:255',
+            'CV' => 'nullable|file|mimes:pdf|max:2048',
+            'group' => 'required|string|max:255',
+            'course' => 'required|string|max:255',
         ];
     }
 }
