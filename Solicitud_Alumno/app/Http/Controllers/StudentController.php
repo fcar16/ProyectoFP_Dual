@@ -7,7 +7,7 @@ use App\Models\Student;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
-use Storage;
+use Illuminate\Support\Facades\Storage;
 
 class StudentController extends Controller
 {

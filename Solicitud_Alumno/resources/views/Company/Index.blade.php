@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-<a href="{{ route('student.create') }}" class="btn btn-primary mb-3">Crea un nuevo estudiante</a>
+<a href="{{ route('company.create') }}" class="btn btn-primary mb-3">Crear Empresa</a>
 <ul class="list-group">
-    @forelse($students as $student)
+    @forelse ($companies as $company)
         <li class="list-group-item d-flex justify-content-between align-items-center">
-            <a href="{{ route('student.show', $student->id) }}">{{ $student->name }}</a>
+            <a href="{{ route('company.show', $company->id) }}">{{ $company->name }}</a>
             <div>
-                <a href="{{ route('student.edit', $student->id) }}" class="btn btn-sm btn-warning">EDIT</a>
-                <form action="{{ route('student.destroy', $student->id) }}" method="POST" class="d-inline">
+                <a href="{{ route('company.edit', $company->id) }}" class="btn btn-sm btn-warning">EDIT</a>
+                <form action="{{ route('company.destroy', $company->id) }}" method="POST" class="d-inline">
                     @method('delete')
                     @csrf
                     <button type="submit" class="btn btn-sm btn-danger">DELETE</button>
