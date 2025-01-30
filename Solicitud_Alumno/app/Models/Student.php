@@ -21,6 +21,6 @@ class Student extends Model
 
     public function company(): BelongsToMany
     {
-        return $this->belongsToMany(company::class)->withPivot('added_by');
+        return $this->belongsToMany(company::class)->withPivot('question');
     }
 }

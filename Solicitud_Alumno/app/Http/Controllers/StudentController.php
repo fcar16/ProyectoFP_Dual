@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Storage;
 
-class StudentController extends Controller
+class StudentController 
 {
     /**
      * Display a listing of the resource.
