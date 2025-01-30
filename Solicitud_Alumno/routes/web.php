@@ -4,6 +4,8 @@ use App\Http\Controllers\StudentController;
 use App\Models\Company;
 use App\Models\Student;
 use App\Http\Controllers\CompanyController;
+use GuzzleHttp\Psr7\Request;
+use App\Http\Controllers\RequestController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -39,3 +41,9 @@ Route::get('/company/{company}/edit', [CompanyController::class, 'edit'])->name(
 Route::put('/company/{company}', [CompanyController::class, 'update'])->name('company.update');
 
 Route::delete('/company/{company}', [CompanyController::class, 'destroy'])->name('company.destroy');
+
+
+Route::get('/request/create', [RequestController::class, 'create'])->name('request.create');
+Route::post('/request', [RequestController::class, 'store'])->name('request.store');
+Route::get('/request/{id}', [RequestController::class, 'show'])->name('request.show');
+Route::get('/student/{student}/requests', [RequestController::class, 'studentRequests'])->name('student.requests');

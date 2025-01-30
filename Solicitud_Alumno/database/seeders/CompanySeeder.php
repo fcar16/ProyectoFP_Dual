@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Company;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -14,6 +14,7 @@ class CompanySeeder extends Seeder
      */
     public function run(): void
     {
+        /*
         Company::create([
             'name' => 'Google',
             'website' => 'https://www.google.com',
@@ -30,9 +31,10 @@ class CompanySeeder extends Seeder
             'NIF' => '12345678C',
         ]);
 
+        */
+        Company::factory()->count(3)->create();
 
-
-
+        /*
         DB::table('company_student')->insert([
             'company_id' => 1,
             'student_id' => 1,
@@ -50,5 +52,6 @@ class CompanySeeder extends Seeder
             'student_id' => 3,
             'question' => 'What is your favorite food?',
         ]);
+        */
     }
 }
