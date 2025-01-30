@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Company;
 use Illuminate\Http\Request;
 
-class CompanyController 
+class CompanyController
 {
     /**
      * Display a listing of the resource.
@@ -37,6 +37,7 @@ class CompanyController
      */
     public function show(Company $company)
     {
+        $company->load('students'); // Cargar la relación con estudiantes
         return view('company.show', compact('company'));
     }
 

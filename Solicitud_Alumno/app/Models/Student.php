@@ -19,7 +19,7 @@ class Student extends Model
     use HasFactory;
 
 
-    public function company(): BelongsToMany
+    public function companies(): BelongsToMany
     {
         return $this->belongsToMany(company::class)->withPivot('question');
     }
