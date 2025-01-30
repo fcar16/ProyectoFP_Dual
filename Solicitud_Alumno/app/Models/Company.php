@@ -11,9 +11,9 @@ class Company extends Model
     protected $fillable = ['name', 'website', 'NIF'];
     use HasFactory;
 
-    public function student(): BelongsToMany
+    public function students(): BelongsToMany
     {
-        return $this->belongsToMany(student::class)->withPivot('question');
+        return $this->belongsToMany(Student::class)->withPivot('question');
     }
 }
 
