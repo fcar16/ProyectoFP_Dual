@@ -2,6 +2,10 @@
 
 @section('content')
 <a href="{{ route('company.create') }}" class="btn btn-primary mb-3">Crear Empresa</a>
+
+<a href="{{ route('student.index') }}" class="btn btn-primary mb-3">Ver Estudiantes</a>
+
+<a href="{{ route('request.create') }}" class="btn btn-primary mb-3">Crear Solicitud</a>
 <ul class="list-group">
     @forelse ($companies as $company)
         <li class="list-group-item d-flex justify-content-between align-items-center">
