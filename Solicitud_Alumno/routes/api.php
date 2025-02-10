@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\ApiRequestController;
+use App\Http\Controllers\API\ApiCompanyController;
 
 
 Route::get('/user', function (Request $request) {

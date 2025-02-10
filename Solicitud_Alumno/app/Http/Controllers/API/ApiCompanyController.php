@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use App\Models\Company;
-use App\Http\Requests\ApiCompanyRequest;
 use Illuminate\Http\JsonResponse;
+use App\Http\Requests\ApiCompanyRequest;
 
 class ApiCompanyController
 {
