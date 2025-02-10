@@ -43,14 +43,14 @@ class RequestController
 
         return view('request.show', compact('relation', 'student', 'company'));
     }
-    
-     public function studentRequests($studentId)
+
+    public function studentRequests($studentId)
     {
         $student = Student::findOrFail($studentId);
         $requests = DB::table('company_student')
             ->where('student_id', $studentId)
             ->get();
 
-        return view('request.student_requests', compact('student', 'requests'));
+        return view('request.student_request', compact('student', 'requests'));
     }
 }

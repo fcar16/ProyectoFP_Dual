@@ -46,4 +46,4 @@ Route::delete('/company/{company}', [CompanyController::class, 'destroy'])->name
 Route::get('/request/create', [RequestController::class, 'create'])->name('request.create');
 Route::post('/request', [RequestController::class, 'store'])->name('request.store');
 Route::get('/request/{id}', [RequestController::class, 'show'])->name('request.show');
-Route::get('/student/{student}/requests', [RequestController::class, 'studentRequests'])->name('student.requests');
+Route::get('/student/{student}/requests', [RequestController::class, 'studentRequests'])->name('request.studentRequests');
