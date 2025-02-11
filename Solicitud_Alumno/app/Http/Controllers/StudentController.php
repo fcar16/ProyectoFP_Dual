@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreStudentRequest;
 use App\Models\Student;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
+
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Storage;
 
-class StudentController 
+class StudentController
 {
     /**
      * Display a listing of the resource.
