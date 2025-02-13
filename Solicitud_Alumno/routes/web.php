@@ -6,7 +6,9 @@ use App\Models\Student;
 use App\Http\Controllers\CompanyController;
 use GuzzleHttp\Psr7\Request;
 use App\Http\Controllers\RequestController;
+use App\Models\Teacher;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TeacherController;
 
 
 
@@ -47,3 +49,11 @@ Route::get('/request/create', [RequestController::class, 'create'])->name('reque
 Route::post('/request', [RequestController::class, 'store'])->name('request.store');
 Route::get('/request/{id}', [RequestController::class, 'show'])->name('request.show');
 Route::get('/student/{student}/requests', [RequestController::class, 'studentRequests'])->name('request.studentRequests');
+
+
+Route::resource('teachers', TeacherController::class);
+
+Route::middleware(['auth', 'profesor'])->group(function () {
+    Route::resource('teachers', TeacherController::class);
+
+});
