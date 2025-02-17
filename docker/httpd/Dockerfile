@@ -38,7 +38,9 @@ COPY --chown=www-data:www-data Solicitud_Alumno /var/www/html/
 
 RUN a2enmod rewrite
 
-WORKDIR /var/www/html
+WORKDIR /var/www/HTML
+
+USER www-data
 
 RUN composer install
 
