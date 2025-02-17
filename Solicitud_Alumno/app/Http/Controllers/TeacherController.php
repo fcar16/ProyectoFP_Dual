@@ -4,14 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Teacher;
+use Illuminate\Support\Facades\Auth;
 
 class TeacherController
 {
-    public function index()
-    {
-        return view('teachers.index');
-    }
-
     public function create()
     {
         return view('teachers.create');
@@ -19,11 +15,11 @@ class TeacherController
 
     public function store(Request $request)
     {
-        // Validate the request...
+
         $teacher = new Teacher();
         $teacher->name = $request->name;
         $teacher->email = $request->email;
-        $teacher->password = $request->password;
+        $teacher->password = bcrypt($request->password); // Encriptar la contraseña
         $teacher->save();
         return redirect()->route('teachers.index');
     }
@@ -58,5 +54,5 @@ class TeacherController
         return redirect()->route('teachers.index');
     }
 
-        
+
 }

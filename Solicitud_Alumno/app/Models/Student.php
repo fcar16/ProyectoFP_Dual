@@ -3,11 +3,16 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
-class Student extends Model
+
+class Student extends Authenticatable
 {
+
+    use HasApiTokens, Notifiable, HasFactory;
     protected $fillable = [
         'dni',
         'name',
@@ -17,7 +22,13 @@ class Student extends Model
         'course',
         'password'
     ];
-    use HasFactory;
+
+
+
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
 
 
     public function companies(): BelongsToMany

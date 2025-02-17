@@ -4,30 +4,34 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Teacher;
 use App\Models\Student;
+use App\Models\Teacher;
 
 class TeacherMiddleware
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
-     */
     public function handle(Request $request, Closure $next)
     {
-        $user = Auth::user();
+        // Get the authenticated user
+        $user = Auth::guard('sanctum')->user();
 
-        // Verifica si el usuario es un estudiante y le niega el acceso
-        if ($user instanceof Student) {
-            abort(403, 'Acceso denegado para estudiantes');
+        if (!$user) {
+            return response()->json([
+                'message' => 'Unauthorized'
+            ], 401);
         }
 
-        // Verifica si el usuario es un profesor
+        if ($user instanceof Student) {
+            return response()->json([
+                'message' => 'Access denied for students'
+            ], 403);
+        }
+
+
         if (!$user instanceof Teacher) {
-            abort(403, 'Acceso no autorizado');
+            return response()->json([
+                'message' => 'Access allowed only for teachers'
+            ], 403);
         }
 
         return $next($request);
