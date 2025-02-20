@@ -28,6 +28,7 @@ class StoreStudentRequest extends FormRequest
             'CV' => 'nullable|file|mimes:pdf|max:2048',
             'group' => 'required|string|max:255',
             'course' => 'required|string|max:255',
+            'password' => 'required|string|min:6',
         ];
     }
 }
