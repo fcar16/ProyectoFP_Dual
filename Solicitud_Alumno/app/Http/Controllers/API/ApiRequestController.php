@@ -10,9 +10,9 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 
-class ApiRequestController 
+class ApiRequestController
 {
-    public function store(Request $request) : JsonResponse
+    public function store(Request $request): JsonResponse
     {
         $request->validate([
             'student_id' => 'required|exists:students,id',
@@ -34,7 +34,7 @@ class ApiRequestController
         ], 201);
     }
 
-    public function show($id) : JsonResource
+    public function show($id): JsonResource
     {
         $relation = DB::table('company_student')
             ->where('id', $id)
@@ -47,7 +47,7 @@ class ApiRequestController
         return new RequestResource($relation);
     }
 
-    public function studentRequests($studentId) : JsonResource
+    public function studentRequests($studentId): JsonResource
     {
         $student = Student::findOrFail($studentId);
         $requests = DB::table('company_student')
@@ -55,5 +55,17 @@ class ApiRequestController
             ->get();
 
         return RequestResource::collection($requests);
+    }
+
+    public function destroy(int $id): JsonResponse
+    {
+        $relation = DB::table('company_student')->where('id', $id)->first();
+
+        if ($relation) {
+            DB::table('company_student')->where('id', $id)->delete();
+            return response()->json(['success' => 'Solicitud eliminada exitosamente.'], 200);
+        } else {
+            return response()->json(['error' => 'Solicitud no encontrada.'], 404);
+        }
     }
 }
