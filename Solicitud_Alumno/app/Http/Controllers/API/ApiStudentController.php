@@ -30,7 +30,7 @@ class ApiStudentController
         $student->email = $request->email;
         $student->group = $request->group;
         $student->course = $request->course;
-        $student->password = $request->password;
+        $student->password = bcrypt($request->password);
 
         if ($request->hasFile('CV')) {
             $path = $request->file('CV')->store('cvs', 'public');
