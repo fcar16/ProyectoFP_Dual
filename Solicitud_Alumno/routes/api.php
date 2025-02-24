@@ -44,7 +44,7 @@ Route::middleware(['auth:sanctum', \App\Http\Middleware\StudentMiddleware::class
     Route::post('/requests', [ApiRequestController::class, 'store']);
     Route::get('/requests/{id}', [ApiRequestController::class, 'show']);
     Route::delete('/requests/{id}', [ApiRequestController::class, 'destroy']); // Agregar esta línea
-
+    Route::put('/requests/{id}', [ApiRequestController::class, 'update']);
 
 
 });

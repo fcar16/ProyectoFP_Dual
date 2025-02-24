@@ -68,4 +68,35 @@ class ApiRequestController
             return response()->json(['error' => 'Solicitud no encontrada.'], 404);
         }
     }
+
+
+    public function update(Request $request, int $id): JsonResponse
+{
+    $request->validate([
+        'company_id' => 'required|exists:companies,id',
+        'question' => 'required|string|max:255',
+    ]);
+
+    $relation = DB::table('company_student')->where('id', $id)->first();
+
+    if (!$relation) {
+        return response()->json(['error' => 'Solicitud no encontrada.'], 404);
+    }
+
+    DB::table('company_student')
+        ->where('id', $id)
+        ->update([
+            'company_id' => $request->company_id,
+            'question' => $request->question,
+            'updated_at' => now(),
+        ]);
+
+    $updatedRelation = DB::table('company_student')->where('id', $id)->first();
+
+    return response()->json([
+        'success' => true,
+        'data' => new RequestResource($updatedRelation)
+    ], 200);
+}
+
 }
