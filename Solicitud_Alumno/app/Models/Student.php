@@ -31,8 +31,8 @@ class Student extends Authenticatable
     ];
 
 
-    public function companies(): BelongsToMany
+    public function Companies(): BelongsToMany
     {
-        return $this->belongsToMany(company::class)->withPivot('question');
+        return $this->belongsToMany(Company::class)->withPivot('question');
     }
 }
