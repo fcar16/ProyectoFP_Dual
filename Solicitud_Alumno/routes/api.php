@@ -3,9 +3,9 @@
 use App\Http\Controllers\Api\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\API\ApiRequestController;
-use App\Http\Controllers\API\ApiCompanyController;
-use App\Http\Controllers\API\ApiStudentController;
+use App\Http\Controllers\Api\ApiRequestController;
+use App\Http\Controllers\Api\ApiCompanyController;
+use App\Http\Controllers\Api\ApiStudentController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
