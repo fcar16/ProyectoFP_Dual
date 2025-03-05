@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+    // Register a new user
     public function register(Request $request)
     {
         $this->validate($request, [
