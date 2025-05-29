@@ -78,28 +78,36 @@ class StudentController
      * Update the specified resource in storage.
      */
     public function update(StoreStudentRequest $request, $id)
-    {
+{
+    $student = \App\Models\Student::findOrFail($id);
 
-        $student = Student::findOrFail($id);
-        $student->dni = $request->dni;
-        $student->name = $request->name;
-        $student->email = $request->email;
-        $student->group = $request->group;
-        $student->course = $request->course;
+    $student->dni = $request->dni;
+    $student->name = $request->name;
+    $student->email = $request->email;
+    $student->group = $request->group;
+    $student->course = $request->course;
+    $student->password = bcrypt($request->password);
 
-        if ($request->hasFile('CV')) {
-            // Elimina el CV anterior si existe
-            if ($student->CV) {
-                Storage::disk('public')->delete($student->CV);
-            }
-            $path = $request->file('CV')->store('cvs', 'public');
-            $student->CV = $path;
+    if ($request->hasFile('CV')) {
+        // Elimina el CV anterior si existe
+        if ($student->CV) {
+            Storage::disk('public')->delete($student->CV);
         }
-
-        $student->save();
-
-        return redirect()->route('student.index')->with('success', 'Estudiante actualizado exitosamente.');
+        $path = $request->file('CV')->store('cvs', 'public');
+        $student->CV = $path;
     }
+
+    $student->save();
+
+    // Devuelve la ruta pública del CV si existe
+    $cvUrl = $student->CV ? asset('storage/' . $student->CV) : null;
+
+    return response()->json([
+        'success' => true,
+        'student' => $student,
+        'cv_url' => $cvUrl,
+    ]);
+}
 
 
     /**

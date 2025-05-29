@@ -5,9 +5,9 @@ return [
 
     'allowed_methods' => ['*'],
 
-    //'allowed_origins' => ['http://localhost:5173'], // Reemplaza con la URL de tu frontend
+    'allowed_origins' => ['http://localhost:5173','http://127.0.0.1:5173'], // Reemplaza con la URL de tu frontend
 
-    'allowed_origins' => ['http://docvalle.duckdns.org'], // Reemplaza con la URL de tu frontend
+    //'allowed_origins' => ['http://docvalle.duckdns.org'], // Reemplaza con la URL de tu frontend
 
     'allowed_origins_patterns' => [],
 

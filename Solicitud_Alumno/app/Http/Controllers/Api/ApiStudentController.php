@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Student;
 use App\Http\Requests\StoreStudentRequest;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Storage;
 
 class ApiStudentController
 {
@@ -46,42 +47,51 @@ class ApiStudentController
     /**
      * Display the specified resource.
      */
-    public function show(int $id): JsonResponse
-    {
-        $student = Student::find($id);
-        if ($student) {
-            return response()->json($student, 200);
-        } else {
-            return response()->json(['error' => 'Student not found'], 404);
-        }
-    }
+   public function show($id)
+{
+    $student = Student::find($id);
+    $cvUrl = $student && $student->CV ? asset('storage/' . $student->CV) : null;
+    return response()->json([
+        'student' => $student,
+        'cv_url' => $cvUrl,
+    ]);
+}
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(StoreStudentRequest $request, int $id): JsonResponse
-    {
-        $student = Student::find($id);
+    public function update(StoreStudentRequest $request, $id)
+{
 
-        if ($student) {
-            $student->dni = $request->dni;
-            $student->name = $request->name;
-            $student->email = $request->email;
-            $student->group = $request->group;
-            $student->course = $request->course;
 
-            if ($request->hasFile('CV')) {
-                $path = $request->file('CV')->store('cvs', 'public');
-                $student->CV = $path;
-            }
 
-            $student->save();
+    $student = \App\Models\Student::findOrFail($id);
 
-            return response()->json(['success' => 'Estudiante actualizado exitosamente.', 'student' => $student], 200);
-        } else {
-            return response()->json(['error' => 'Student not found'], 404);
+    $student->dni = $request->dni;
+    $student->name = $request->name;
+    $student->email = $request->email;
+    $student->group = $request->group;
+    $student->course = $request->course;
+    $student->password = bcrypt($request->password);
+
+    if ($request->hasFile('CV')) {
+        if ($student->CV) {
+            Storage::disk('public')->delete($student->CV);
         }
+        $path = $request->file('CV')->store('cvs', 'public');
+        $student->CV = $path;
     }
+
+    $student->save();
+
+    $cvUrl = $student->CV ? asset('storage/' . $student->CV) : null;
+
+    return response()->json([
+        'success' => true,
+        'student' => $student,
+        'cv_url' => $cvUrl,
+    ]);
+}
 
     /**
      * Remove the specified resource from storage.

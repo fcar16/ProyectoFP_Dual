@@ -15,10 +15,9 @@ Route::get('/user', function (Request $request) {
 
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
+Route::post('/student/{id}', [ApiStudentController::class, 'update']);
 
 // Rutas para student
-
-
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/student/{id}', [ApiStudentController::class, 'show']);
     Route::get('/student', [ApiStudentController::class, 'index']);
