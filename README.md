@@ -33,6 +33,8 @@ Sigue estos pasos para instalar y configurar el proyecto:
     ```sh
     php artisan key:generate
     ```
+4.1 Crear link para el cv
+    php artisan storage:link
 
 5. Configura la base de datos en el archivo [.env](http://_vscodecontentref_/1):
     ```
