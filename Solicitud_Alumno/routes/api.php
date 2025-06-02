@@ -16,6 +16,8 @@ Route::get('/user', function (Request $request) {
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
 Route::post('/student/{id}', [ApiStudentController::class, 'update']);
+Route::get('/stats', [\App\Http\Controllers\Api\StatsController::class, 'index']);
+Route::get('/requests', [ApiRequestController::class, 'allRequests']);
 
 // Rutas para student
 Route::middleware(['auth:sanctum'])->group(function () {

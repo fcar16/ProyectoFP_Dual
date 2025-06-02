@@ -47,6 +47,23 @@ class ApiRequestController
         return new RequestResource($relation);
     }
 
+    public function allRequests()
+{
+    $requests = DB::table('company_student')
+        ->join('students', 'company_student.student_id', '=', 'students.id')
+        ->join('companies', 'company_student.company_id', '=', 'companies.id')
+        ->select(
+            'company_student.*',
+            'students.name as student_name',
+            'students.email as student_email',
+            'companies.name as company_name'
+        )
+        ->orderByDesc('company_student.created_at')
+        ->get();
+
+    return response()->json($requests);
+}
+
     public function studentRequests($studentId): JsonResource
     {
         $student = Student::findOrFail($studentId);
